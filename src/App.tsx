@@ -1,11 +1,11 @@
-import UserSubmit from "./components/UserSubmit";
+import SubmitForm from "./components/SubmitForm";
 
 function App() {
   return (
     <>
       <div>
         <h2>User Info</h2>
-        <UserSubmit />
+        <SubmitForm />
       </div>
     </>
   );

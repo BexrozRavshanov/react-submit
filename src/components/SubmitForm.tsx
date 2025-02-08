@@ -28,7 +28,7 @@ function UserSubmit() {
   };
 
   const disabledAble = useMemo(() => {
-    return nameValue.length >= 3 && numberValue.length == 17;
+    return nameValue.length >= 3 && numberValue.length == 13;
   }, [nameValue, numberValue]);
 
   return (
@@ -44,7 +44,6 @@ function UserSubmit() {
             Submit
           </button>
         </form>
-        <div></div>
       </div>
     </>
   );
