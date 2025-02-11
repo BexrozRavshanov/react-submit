@@ -1,46 +1,32 @@
 import { useState, useMemo } from "react";
-import UserName from "./UserName.tsx";
-import { isValidPhoneNumber } from "libphonenumber-js";
-import UserNumberByLib from "./UserNumberByLib.tsx";
+import NameInput from "./NameInput.tsx";
+import PhoneNumberInput from "./PhoneNumberInput.tsx";
 
-function UserSubmit() {
+import { checkVaildInputs } from "../utils/index.ts";
+
+function SubmitForm() {
   const [nameValue, setNameValue] = useState("");
-  const [numberValue, setNumberValue] = useState("+998");
+  const [numberValue, setNumberValue] = useState("");
+  const nameValid = RegExp("[^0-9!@#$%^&*()]", "g");
 
-  const getUserInfo = (event: any) => {
-    if (nameValue != "" && numberValue != "") {
-      console.log(
-        `user name is ${nameValue} and user number is ${numberValue}`
-      );
-      event.preventDefault();
-    } else {
-      event.preventDefault();
-    }
-
-    if (
-      /[^0-9\!\@\#\$\%\^\&\*\(\)]/g.test(nameValue) &&
-      isValidPhoneNumber(numberValue, "UZ")
-    ) {
-      alert("Everything is ok");
-    } else {
-      alert("You write something wrong");
-    }
+  const submitAction = (event: React.FormEvent<HTMLFormElement>) => {
+    checkVaildInputs(event, nameValue, numberValue, nameValid);
   };
 
-  const disabledAble = useMemo(() => {
+  const isSubmitEnabled = useMemo(() => {
     return nameValue.length >= 3 && numberValue.length == 13;
   }, [nameValue, numberValue]);
 
   return (
     <>
       <div>
-        <form onSubmit={getUserInfo}>
-          <UserName nameValue={nameValue} setNameValue={setNameValue} />
-          <UserNumberByLib
+        <form onSubmit={submitAction}>
+          <NameInput nameValue={nameValue} setNameValue={setNameValue} />
+          <PhoneNumberInput
             numberValue={numberValue}
             setNumberValue={setNumberValue}
           />
-          <button disabled={!disabledAble} type="submit">
+          <button disabled={!isSubmitEnabled} type="submit">
             Submit
           </button>
         </form>
@@ -49,4 +35,4 @@ function UserSubmit() {
   );
 }
 
-export default UserSubmit;
+export default SubmitForm;
